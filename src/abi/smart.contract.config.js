@@ -1,6 +1,17 @@
 export const Contract_Address = "0xAEb1C7F87bb234C893C1b5F8E77A0EE02CebF740";
 
-export const Contract_ABi =  [
+export const Contract_ABi = [
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
   {
     "anonymous": false,
     "inputs": [
@@ -13,29 +24,17 @@ export const Contract_ABi =  [
       {
         "indexed": false,
         "internalType": "string",
-        "name": "hash",
+        "name": "title",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "description",
+        "name": "hash",
         "type": "string"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tipAmount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address payable",
-        "name": "author",
-        "type": "address"
       }
     ],
-    "name": "ImageUploaded",
+    "name": "PostCreated",
     "type": "event"
   },
   {
@@ -50,84 +49,24 @@ export const Contract_ABi =  [
       {
         "indexed": false,
         "internalType": "string",
-        "name": "hash",
+        "name": "title",
         "type": "string"
       },
       {
         "indexed": false,
         "internalType": "string",
-        "name": "description",
+        "name": "hash",
         "type": "string"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "tipAmount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "address payable",
-        "name": "author",
-        "type": "address"
+        "internalType": "bool",
+        "name": "published",
+        "type": "bool"
       }
     ],
-    "name": "TipOnPost",
+    "name": "PostUpdated",
     "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "imageId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "images",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "hash",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "description",
-        "type": "string"
-      },
-      {
-        "internalType": "uint256",
-        "name": "tipAmount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address payable",
-        "name": "author",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [],
@@ -144,19 +83,101 @@ export const Contract_ABi =  [
     "constant": true
   },
   {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
     "inputs": [
       {
         "internalType": "string",
-        "name": "_imageHash",
+        "name": "_name",
+        "type": "string"
+      }
+    ],
+    "name": "updateName",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_hash",
+        "type": "string"
+      }
+    ],
+    "name": "fetchPost",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "published",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Blog.Post",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_title",
         "type": "string"
       },
       {
         "internalType": "string",
-        "name": "_desc",
+        "name": "_hash",
         "type": "string"
       }
     ],
-    "name": "uploadImage",
+    "name": "createPost",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -165,15 +186,65 @@ export const Contract_ABi =  [
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "_id",
+        "name": "_postId",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_title",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "_hash",
+        "type": "string"
+      },
+      {
+        "internalType": "bool",
+        "name": "_published",
+        "type": "bool"
       }
     ],
-    "name": "tipPostOwner",
+    "name": "updatePost",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "fetchAllPosts",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "id",
+            "type": "uint256"
+          },
+          {
+            "internalType": "string",
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "published",
+            "type": "bool"
+          }
+        ],
+        "internalType": "struct Blog.Post[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function",
-    "payable": true
+    "constant": true
   }
 ]
 
