@@ -1,4 +1,4 @@
-import { config } from "../config/config";
+import { config, ownerAddress } from "../config/config";
 
 export class ContractService {
     contractABi;
@@ -21,6 +21,27 @@ export class ContractService {
             }
         } catch (error) { 
             return error;
+        }
+    }
+
+    createPost = async (title, hash) => {
+        try {
+            const { contractServerUrl } = config
+            if (this.contractAddress && this.contractABi) {
+                const createPost = new contractServerUrl.eth.Contract(this.contractABi, this.contractAddress);
+                try {
+                    const postValues = await createPost.methods.createPost(title, hash).send({
+                        from: localStorage.getItem('public')
+                    }).on((tx) => {
+                        return tx;
+                    });
+                    return postValues;
+                } catch (error) {
+                    return error;
+                }
+            }
+        } catch (error) {
+            return error
         }
     }
 }
